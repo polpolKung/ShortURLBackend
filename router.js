@@ -2,16 +2,9 @@ const express = require('express')
 const router = express.Router()
 const validate = require("validate.js");
 const ShortUrl = require('./shortUrl.js')
+const urlPattern = /^(https?|ftp):\/\/[A-Za-z0-9.-]+(\S*)?$/
 
-const validateUrl = (url = "") => {
-    return validate({ website: url }, {
-        website: {
-            url: {
-                allowLocal: true
-            }
-        }
-    });
-}
+
 
 router.get('/shortUrls' , async (req, res)=> {
     const shortUrls = await ShortUrl.find()
@@ -20,7 +13,10 @@ router.get('/shortUrls' , async (req, res)=> {
 
 router.post('/shortUrls', async (req,res)=> {
     const { fullUrl } = req.body;
-    if (!fullUrl || validateUrl(fullUrl)) {
+    const validUrl = urlPattern.test(fullUrl)
+    console.log(!fullUrl || validUrl);
+    console.log(validUrl);
+    if (!fullUrl || !validUrl) {
         return res.status(400).send({ error: 'Invalid URL' })
     }
     

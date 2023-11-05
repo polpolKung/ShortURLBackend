@@ -20,6 +20,6 @@ const shorUrlSchema = new mongoose.Schema({
         required: true,
         default: 0
     }
-})
+}, { versionKey: false })
 
 module.exports = mongoose.model('ShortUrl', shorUrlSchema)
