@@ -21,7 +21,7 @@ router.get('/shortUrls' , async (req, res)=> {
 router.post('/shortUrls', async (req,res)=> {
     const { fullUrl } = req.body;
     if (!fullUrl || validateUrl(fullUrl)) {
-        return res.status(400).json({ error: 'Invalid URL' })
+        return res.status(400).send({ error: 'Invalid URL' })
     }
     
     const existingUrl = await ShortUrl.findOne({ full: fullUrl })
@@ -36,11 +36,12 @@ router.post('/shortUrls', async (req,res)=> {
 router.get('/shortUrls/:shortUrl', async (req,res)=> {
     const shortUrl = await ShortUrl.findOne({short: req.params.shortUrl })
     if(shortUrl === null) {
-        return res.sendStatus(404).json({ error: 'cannot find URL' })
-    }
+        return res.status(404).send({ error: 'cannot find URL' })
+    } 
     shortUrl.clicks++
     shortUrl.save()
-    res.send(shortUrl.full).status(302).send();
+    res.send(shortUrl.full).status(302);
 })
+    
 
 module.exports = router
