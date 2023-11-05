@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const validate = require("validate.js");
 const ShortUrl = require('./shortUrl.js')
 const urlPattern = /^(https?|ftp):\/\/[A-Za-z0-9.-]+(\S*)?$/
 
