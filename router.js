@@ -13,8 +13,6 @@ router.get('/shortUrls' , async (req, res)=> {
 router.post('/shortUrls', async (req,res)=> {
     const { fullUrl } = req.body;
     const validUrl = urlPattern.test(fullUrl)
-    console.log(!fullUrl || validUrl);
-    console.log(validUrl);
     if (!fullUrl || !validUrl) {
         return res.status(400).send({ error: 'Invalid URL' })
     }
